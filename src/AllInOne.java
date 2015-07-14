@@ -33,7 +33,7 @@ public class AllInOne extends HttpServlet {
 	 * @see Servlet#destroy()
 	 */
 	public void destroy() {
-
+		System.out.println("in destroy()");
 	}
 
 	/**

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class WithParams extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	// Method to handle GET method request.
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Set response content type
 		response.setContentType("text/html");
@@ -22,9 +23,9 @@ public class WithParams extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String title = "Using GET Method to Read Form Data";
 		String docType = "<!doctype html public \"-//w3c//dtd html 4.0 " + "transitional//en\">\n";
-		out.println(docType + "<html>\n" + "<head><title>" + title + "</title></head>\n"
-				+ "<body bgcolor=\"#f0f0f0\">\n" + "<h1 align=\"center\">" + title + "</h1>\n" + "<ul>\n"
-				+ "  <li><b>First Name</b>: " + request.getParameter("first_name") + "\n" + "  <li><b>Last Name</b>: "
+		out.println(docType + "<html>\n" + "<head><title>" + title + "</title></head>\n" + "<body>\n"
+				+ "<h1 align=\"center\">" + title + "</h1>\n" + "<ul>\n" + "  <li><b>First Name</b>: "
+				+ request.getParameter("first_name") + "\n" + "  <li><b>Last Name</b>: "
 				+ request.getParameter("last_name") + "\n" + "</ul>\n" + "</body></html>");
 	}
 
