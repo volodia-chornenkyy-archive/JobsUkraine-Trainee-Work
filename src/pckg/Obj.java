@@ -20,6 +20,5 @@ public class Obj {
 	public void setI(int i) {
 		this.i = i;
 	}
-	
-	
+		
 }
