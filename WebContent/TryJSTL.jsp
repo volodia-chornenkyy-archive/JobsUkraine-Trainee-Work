@@ -40,7 +40,7 @@
 
 	<!-- check if u can rest today -->
 	<p>
-		<c:set value="7" var="numOfDay" />
+		<c:set value="8" var="numOfDay" />
 		<c:choose>
 			<c:when test="${numOfDay <= 5 && numOfDay > 0}">
        Is Weekday
@@ -49,7 +49,7 @@
         Is Weekend
     </c:when>
 			<c:otherwise>
-        Magick
+        <h1>Magick</h1>
     </c:otherwise>
 		</c:choose>
 	</p>
