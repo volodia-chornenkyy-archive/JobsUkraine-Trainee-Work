@@ -25,15 +25,15 @@
 	<p>
 	<h3>JSP:</h3>
 	<ul>
-		<li><a href="/Servlets/TryDirectives.jsp">Try of jsp
+		<li><a href="/Servlets/BasicJSP/TryDirectives.jsp">Try of jsp
 				directives (TryDirectives.jsp)</a></li>
-		<li><a href="/Servlets/Form.jsp">Check doPost with JavaBeans
-				(Form.jsp, Result.jsp, pckg/Obj.java)</a></li>
-		<li><a href="/Servlets/TryJSTL.jsp">Try work of jstl core
-				taglib (TryJSTL.java)</a></li>
-		<li><a href="/Servlets/FilterTest/FilterStartup.jsp">Check
+		<li><a href="/Servlets/BasicJSP/Form.jsp">Check doPost with
+				JavaBeans (Form.jsp, Result.jsp, servlets/Obj.java)</a></li>
+		<li><a href="/Servlets/BasicJSP/TryJSTL.jsp">Try work of jstl
+				core taglib (TryJSTL.java)</a></li>
+		<li><a href="/Servlets/BasicJSP/FilterTest/FilterStartup.jsp">Check
 				work of redirect/forward by filter (/FilterTest/FilterStartup.jsp,
-				/FilterTest/Error.jsp, filters/TryFilter.java)</a></li>
+				/FilterTest/Error.jsp, servlets/TryFilter.java)</a></li>
 	</ul>
 	</p>
 </body>

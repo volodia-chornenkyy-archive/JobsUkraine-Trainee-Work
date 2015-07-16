@@ -1,4 +1,4 @@
-
+package servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/")
 public class Runner extends HttpServlet {
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.getRequestDispatcher("/StartingPage.jsp").forward(request, response);
 	}
-	
+
 }
