@@ -7,9 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class SimpleOne
- */
 @WebServlet("/SimpleOne")
 public class SimpleGet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
