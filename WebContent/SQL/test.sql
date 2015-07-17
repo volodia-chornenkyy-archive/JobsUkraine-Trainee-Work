@@ -98,3 +98,18 @@ SELECT
 FROM
     ftable
 GROUP BY test_col;
+
+-- VIEW
+CREATE VIEW view_select_all
+AS
+SELECT
+  *
+FROM ftable
+WHERE id > 2;
+
+SELECT * FROM view_select_all WHERE test_col = 0.3;
+
+-- JOINs
+SELECT * FROM ftable INNER JOIN stable ON ftable.id = stable.fk;
+SELECT * FROM ftable LEFT JOIN stable ON ftable.id = stable.fk;
+SELECT * FROM ftable RIGHT JOIN stable ON ftable.id = stable.fk;
