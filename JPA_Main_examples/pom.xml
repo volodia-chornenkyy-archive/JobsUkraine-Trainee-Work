@@ -1,32 +1,33 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>JPA_Main_examples</groupId>
-  <artifactId>JPA_Main_examples</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>JPA_Main_examples</groupId>
+	<artifactId>JPA_Main_examples</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
 		<java.version>1.8</java.version>
 		<spring.data>1.8.1.RELEASE</spring.data>
 		<mysql.version>5.1.6</mysql.version>
 		<hb.manager>4.3.10.Final</hb.manager>
 	</properties>
-  
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
-        <configuration>
-          <source/>
-          <target/>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  
-  
-  <dependencies>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source />
+					<target />
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+	<dependencies>
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -45,8 +46,8 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hb.manager}</version>
 		</dependency>
-		
+
 	</dependencies>
-  
-  
+
+
 </project>
