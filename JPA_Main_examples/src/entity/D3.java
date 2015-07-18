@@ -8,10 +8,6 @@ import javax.persistence.Enumerated;
 //org.hibernate.InstantiationException: No default constructor for entity: :
 //entity.D3
 
-enum Figure {
-	SQUARE, TRIANGLE
-};
-
 @Embeddable
 public class D3 {
 	float z;
