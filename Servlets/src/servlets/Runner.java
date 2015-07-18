@@ -12,7 +12,7 @@ public class Runner extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("/StartingPage.jsp").forward(request, response);
+		request.getRequestDispatcher("/BasicJSP/StartingPage.jsp").forward(request, response);
 	}
 
 }
