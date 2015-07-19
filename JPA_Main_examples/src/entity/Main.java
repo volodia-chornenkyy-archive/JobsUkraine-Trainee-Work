@@ -1,12 +1,21 @@
 package entity;
 
-import javax.persistence.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import myutil.MyTimer;
 
 public class Main {
 
 	private static PointService ps;
 	private static PointQuery pq;
+
+	private static MyTimer timer;
+	private static final String SPACE = "\n---------------------";
 
 	private static Map<String, String> getCustomProperties(String user, String password, String dbName) {
 		Map<String, String> properties = new HashMap<String, String>();
@@ -29,6 +38,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+		timer = new MyTimer();
 
 		/*
 		 * persistence.xml should exist anyway, but custom properties can be set
@@ -46,22 +56,44 @@ public class Main {
 
 		// fillTableWithPoints(50, true);
 
-		System.out.println("Search result: " + ps.find(40L));
-		System.out.println("Search result: " + ps.find(300L));
+		System.out.println(SPACE + "\nSearch result: " + ps.find(40L) + SPACE);
+		System.out.println("Search result: " + ps.find(300L) + SPACE);
 
-		System.out.println("Remove result: " + ps.remove(4L));
+		System.out.println(SPACE + "\nRemove result: " + ps.remove(4L) + SPACE);
 
-		System.out.println("Update result: " + ps.update(1L, 100f, 100f));
+		System.out.println(SPACE + "\nUpdate result: " + ps.update(1L, 100f, 100f) + SPACE);
 
-		System.out.println("Check if loaded: " + ps.pointInitialized(1000L));
+		System.out.println(SPACE + "\nCheck if loaded: " + ps.pointInitialized(1000L) + SPACE);
 
 		/* QUERY */
 
-		System.out.println("typedQuery select all: " + pq.selectAllTypedQuery());
-		System.out.println("criteriaQuery select all: " + pq.selectAllCriteriaQuery());
+		timer.start();
+		System.out.println(
+				SPACE + "\ntypedQuery select all: " + pq.selectAllPointsJPQL() + "\ntime: " + timer.stop() + SPACE);
+		timer.start();
+		System.out.println(
+				"criteriaQuery select all: " + pq.selectAllPointsCriteria() + "\ntime: " + timer.stop() + SPACE);
 
-		System.out.println("typedQuery select triangles: " + pq.selectFigureTypedQuery(Figure.TRIANGLE));
-		System.out.println("criteriaQuery select squares: " + pq.selectFigureTypedQuery(Figure.SQUARE));
+		timer.start();
+		System.out.println(SPACE + "\ntypedQuery select triangles: " + pq.selectFigureJPQL(Figure.TRIANGLE) + "\ntime: "
+				+ timer.stop() + SPACE);
+		timer.start();
+		System.out.println("criteriaQuery select squares: " + pq.selectFigureJPQL(Figure.SQUARE) + "\ntime: "
+				+ timer.stop() + SPACE);
+
+		timer.start();
+		System.out.println(
+				SPACE + "\ntypedQuery count entities: " + pq.countAllPointsJPQL() + "\ntime: " + timer.stop() + SPACE);
+		timer.start();
+		System.out.println(
+				"criteriaQuery count entities: " + pq.countAllPointsCriteria() + "\ntime: " + timer.stop() + SPACE);
+
+		timer.start();
+		System.out.println(SPACE + "\ntypedQuery custom select: " + pq.filterPointsJPQL(Figure.SQUARE, 10f, null, null)
+				+ "\ntime: " + timer.stop() + SPACE);
+		timer.start();
+		System.out.println("criteriaQuery custom select: " + pq.filterPointsCriteria(Figure.SQUARE, 10f, null, null)
+				+ "\ntime: " + timer.stop() + SPACE);
 
 		// Close the database connection:
 		em.close();
