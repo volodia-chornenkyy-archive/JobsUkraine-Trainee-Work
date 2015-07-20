@@ -2,24 +2,35 @@ package model;
 
 import java.util.List;
 
-import javax.ejb.Stateful;
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
-import javax.transaction.UserTransaction;
+
+import servlets.PointTastFacade;
 
 @Stateless
-public class PointServies {
+public class PointServies implements PointTastFacade {
 
-	@PersistenceContext(name="pointProvider",type = PersistenceContextType.EXTENDED)
+	@PersistenceContext
 	private EntityManager em;
+
 	
-	public void addMovie(Point point) throws Exception {
-		em.persist(point);
+	@PostConstruct
+	public void init() {
+	    if (this.em == null) {
+	        System.err.println("EntityManages is NULL");
+	    }
+	}
+
+	
+	public void addMovie(Point point) {
+		try {
+			em.persist(point);
+		} catch (NullPointerException e) {
+			System.out.println("EntityMeneger == null");
+		}
 	}
 
 	public void deleteMovie(Point point) throws Exception {

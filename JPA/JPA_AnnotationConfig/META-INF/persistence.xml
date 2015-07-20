@@ -6,25 +6,16 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 
 	version="2.1">
 
-	<persistence-unit name="pointProvider">
-	
-		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-		
+	<persistence-unit name="pointProvider"
+		transaction-type="JTA">
+
+		<jta-data-source>jdbc/MyRes</jta-data-source>
 		<class>model.Point</class>
 
 		<properties>
-			<!-- Configuring JDBC properties -->
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/testdb" />
-			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="admin" />
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-
-			<!-- Hibernate properties -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			
-			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)" />
 		</properties>
+
 	</persistence-unit>
 
 </persistence>

@@ -2,7 +2,8 @@ package servlets;
 
 import java.io.IOException;
 
-import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,7 @@ public class PointTest extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("get");
-		// response.getWriter().append("Served at:
+		response.getWriter().append("doGet()");
 		// ").append(request.getContextPath());
 	}
 
@@ -28,20 +29,31 @@ public class PointTest extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("post");
 
-		Point p = new Point();
-		p.setFigure(request.getParameter("f"));
-		p.setX(Float.valueOf(request.getParameter("x")));
-		p.setY(Float.valueOf(request.getParameter("y")));
-		p.setZ(Float.valueOf(request.getParameter("z")));
-		System.out.println(p);
-		
-		PointServies ps = new PointServies();
+		Point p;
 		try {
-			ps.addMovie(p);
-		} catch (Exception e) {
+			p = (Point) new InitialContext().lookup("java:model/PointServies");
+
+			// Point p = new Point();
+			p.setFigure(request.getParameter("f"));
+			p.setX(Float.valueOf(request.getParameter("x")));
+			p.setY(Float.valueOf(request.getParameter("y")));
+			p.setZ(Float.valueOf(request.getParameter("z")));
+			System.out.println(p);
+
+			PointServies ps = new PointServies();
+			try {
+				ps.addMovie(p);
+				response.getWriter().append("Add complete");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} catch (NamingException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+
 	}
 
 }

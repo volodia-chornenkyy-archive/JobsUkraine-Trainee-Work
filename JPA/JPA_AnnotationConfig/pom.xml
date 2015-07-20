@@ -13,6 +13,7 @@
 		<hb.manager>4.3.10.Final</hb.manager>
 		<ejb.api>3.0</ejb.api>
 		<jstl>1.2</jstl>
+		<servlet>3.1.0</servlet>
 	</properties>
 
 	<build>
@@ -68,8 +69,13 @@
 			<artifactId>jstl</artifactId>
 			<version>${jstl}</version>
 		</dependency>
-		
-		
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet}</version>
+		</dependency>
+
 
 	</dependencies>
 
