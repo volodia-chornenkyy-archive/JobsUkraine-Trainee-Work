@@ -6,8 +6,10 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
-import myutil.MyTimer;
+import entity.queries.CriteriaApi;
+import entity.queries.JavaPersitenceQueryLang;
 
 public class Main {
 
@@ -45,37 +47,31 @@ public class Main {
 		System.out.println(SPACE + "\nCheck if loaded: " + service.pointInitialized(1000L) + SPACE);
 	}
 
-	private static void runQueries(EntityManager em) {
-		PointQuery pq = new PointQuery(em);
-		MyTimer timer = new MyTimer();
+	private static void runCriteriaQueries(EntityManager em) {
+		CriteriaApi criteriaApi = new CriteriaApi(em);
 
-		timer.start();
-		System.out.println(
-				SPACE + "\ntypedQuery select all: " + pq.selectAllPointsJPQL() + "\ntime: " + timer.stop() + SPACE);
-		timer.start();
-		System.out.println(
-				"criteriaQuery select all: " + pq.selectAllPointsCriteria() + "\ntime: " + timer.stop() + SPACE);
+		System.out.println("criteriaQuery select all: " + criteriaApi.selectAll() + SPACE);
 
-		timer.start();
-		System.out.println(SPACE + "\ntypedQuery select triangles: " + pq.selectFigureJPQL(Figure.TRIANGLE) + "\ntime: "
-				+ timer.stop() + SPACE);
-		timer.start();
-		System.out.println("criteriaQuery select squares: " + pq.selectFigureJPQL(Figure.SQUARE) + "\ntime: "
-				+ timer.stop() + SPACE);
+		// don't work
+		// System.out.println("criteriaQuery select squares: " +
+		// criteriaApi.selectFigure(Figure.SQUARE) + SPACE);
 
-		timer.start();
-		System.out.println(
-				SPACE + "\ntypedQuery count entities: " + pq.countAllPointsJPQL() + "\ntime: " + timer.stop() + SPACE);
-		timer.start();
-		System.out.println(
-				"criteriaQuery count entities: " + pq.countAllPointsCriteria() + "\ntime: " + timer.stop() + SPACE);
+		System.out.println("criteriaQuery count entities: " + criteriaApi.countAll() + SPACE);
 
-		timer.start();
-		System.out.println(SPACE + "\ntypedQuery custom select: " + pq.filterPointsJPQL(Figure.SQUARE, 10f, null, null)
-				+ "\ntime: " + timer.stop() + SPACE);
-		timer.start();
-		System.out.println("criteriaQuery custom select: " + pq.filterPointsCriteria(Figure.SQUARE, 10f, null, null)
-				+ "\ntime: " + timer.stop() + SPACE);
+		System.out.println(
+				"criteriaQuery custom select: " + criteriaApi.filterPoints(Figure.SQUARE, 10f, null, null) + SPACE);
+	}
+
+	private static void runJPQLQueries(EntityManager em) {
+		JavaPersitenceQueryLang jpql = new JavaPersitenceQueryLang(em);
+
+		System.out.println("criteriaQuery select all: " + jpql.selectAll() + SPACE);
+
+		System.out.println("criteriaQuery select squares: " + jpql.selectFigure(Figure.SQUARE) + SPACE);
+
+		System.out.println("criteriaQuery count entities: " + jpql.countAll() + SPACE);
+
+		System.out.println("criteriaQuery custom select: " + jpql.filterPoints(Figure.SQUARE, 10f, null, null) + SPACE);
 	}
 
 	public static void main(String[] args) {
@@ -86,16 +82,38 @@ public class Main {
 		 */
 		// WARNING: new properties will overwrite existing
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaProvider",
-				getCustomProperties("root", "root", "testdb"));
+				getCustomProperties("root", "admin", "testdb"));
 		EntityManager em = emf.createEntityManager();
 
 		PointService ps = new PointService(em);
+		LineService ls = new LineService(em);
 
-		// fillTableWithPoints(ps, 50, true);
+		// create points
+		// fillTableWithPoints(ps, 15, true);
 
-		runBasics(ps);
+		// add points to line
+		// LineService ls = new LineService(em);
+		// ls.create("first");
+		// for (long i = 5; i < 10; i++) {
+		// ls.addPoint(1L,i);
+		// }
 
-		runQueries(em);
+		// get all points in selected line
+		// System.out.println(ls.getPoints(1L));
+
+		// runBasics(ps);
+
+		// Queries
+		// runJPQLQueries(em);
+		// runCriteriaQueries(em);
+
+		// TypedQuery<Point> tq1 = em.createNamedQuery("Point.getAll",
+		// Point.class);
+		// System.out.println(tq1.getResultList());
+
+		// TypedQuery<Point> tq2 = em.createNamedQuery("Point.selectFigure",
+		// Point.class);
+		// System.out.println(tq2.setParameter("figure", Figure.TRIANGLE).getResultList());
 
 		// Close the database connection:
 		em.close();
