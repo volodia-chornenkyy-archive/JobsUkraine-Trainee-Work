@@ -11,9 +11,6 @@ import myutil.MyTimer;
 
 public class Main {
 
-	private static PointService ps;
-
-	private static MyTimer timer;
 	private static final String SPACE = "\n---------------------";
 
 	private static Map<String, String> getCustomProperties(String user, String password, String dbName) {
@@ -27,20 +24,31 @@ public class Main {
 		return properties;
 	}
 
-	private static void fillTableWithPoints(int amount, boolean log) {
+	private static void fillTableWithPoints(PointService service, int amount, boolean log) {
 		// Store points in the database:
 		for (int i = 0; i < amount; i++) {
-			ps.create(i, i * i);
+			service.create(i, i * i);
 			if (log)
 				System.out.printf("created %d from %d\n", i, amount);
 		}
 	}
-	
-	private static void runQueries(EntityManager em){
-		/* QUERY */
-		private PointQuery pq = new PointQuery(em);
-		timer = new MyTimer();
-		
+
+	private static void runBasics(PointService service) {
+
+		System.out.println(SPACE + "\nSearch result: " + service.find(40L) + SPACE);
+		System.out.println("Search result: " + service.find(300L) + SPACE);
+
+		System.out.println(SPACE + "\nRemove result: " + service.remove(4L) + SPACE);
+
+		System.out.println(SPACE + "\nUpdate result: " + service.update(1L, 100f, 100f) + SPACE);
+
+		System.out.println(SPACE + "\nCheck if loaded: " + service.pointInitialized(1000L) + SPACE);
+	}
+
+	private static void runQueries(EntityManager em) {
+		PointQuery pq = new PointQuery(em);
+		MyTimer timer = new MyTimer();
+
 		timer.start();
 		System.out.println(
 				SPACE + "\ntypedQuery select all: " + pq.selectAllPointsJPQL() + "\ntime: " + timer.stop() + SPACE);
@@ -71,7 +79,6 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		
 
 		/*
 		 * persistence.xml should exist anyway, but custom properties can be set
@@ -82,23 +89,13 @@ public class Main {
 				getCustomProperties("root", "root", "testdb"));
 		EntityManager em = emf.createEntityManager();
 
-		ps = new PointService(em);
-		
+		PointService ps = new PointService(em);
 
-		/* BASIC */
+		// fillTableWithPoints(ps, 50, true);
 
-		// fillTableWithPoints(50, true);
+		runBasics(ps);
 
-		System.out.println(SPACE + "\nSearch result: " + ps.find(40L) + SPACE);
-		System.out.println("Search result: " + ps.find(300L) + SPACE);
-
-		System.out.println(SPACE + "\nRemove result: " + ps.remove(4L) + SPACE);
-
-		System.out.println(SPACE + "\nUpdate result: " + ps.update(1L, 100f, 100f) + SPACE);
-
-		System.out.println(SPACE + "\nCheck if loaded: " + ps.pointInitialized(1000L) + SPACE);
-
-		runQueries();
+		runQueries(em);
 
 		// Close the database connection:
 		em.close();
