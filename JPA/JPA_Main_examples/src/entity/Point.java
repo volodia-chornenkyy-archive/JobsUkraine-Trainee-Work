@@ -73,7 +73,7 @@ public class Point implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("Point(%.2f, %.2f, %s, Line(%s))\n", this.getX(), this.getY(), this.thirdDimention,
-				(this.line == null) ? "null" : this.line.getName());
+		return String.format("Point(%d, %.2f, %.2f, %s, Line(%s))\n", this.getId(), this.getX(), this.getY(),
+				this.thirdDimention, (this.line == null) ? "null" : this.line.getName());
 	}
 }
