@@ -115,6 +115,9 @@ public class Main {
 		// Point.class);
 		// System.out.println(tq2.setParameter("figure", Figure.TRIANGLE).getResultList());
 
+		TypedQuery<Point> tq3 = em.createNamedQuery("Point.selectLess",Point.class);
+		System.out.println(tq3.setParameter("maxValue", 5L).getResultList());
+		
 		// Close the database connection:
 		em.close();
 		emf.close();
