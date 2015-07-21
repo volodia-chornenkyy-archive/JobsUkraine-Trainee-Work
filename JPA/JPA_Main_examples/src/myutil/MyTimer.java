@@ -6,9 +6,7 @@ public class MyTimer {
 
 	private boolean isActive;
 
-	private static final long NANOSECOND_TO_SECOND = 1_000_000_000;
-	private static final long NANOSECOND_TO_MILLISECOND = 1_000_000;
-
+	private static final long NANOSECOND_TO_SECOND = 1000000000;
 	public void start() {
 		begin = System.nanoTime();
 		isActive = true;

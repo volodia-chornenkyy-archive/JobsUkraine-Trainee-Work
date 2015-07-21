@@ -12,7 +12,6 @@ import myutil.MyTimer;
 public class Main {
 
 	private static PointService ps;
-	private static PointQuery pq;
 
 	private static MyTimer timer;
 	private static final String SPACE = "\n---------------------";
@@ -36,37 +35,12 @@ public class Main {
 				System.out.printf("created %d from %d\n", i, amount);
 		}
 	}
-
-	public static void main(String[] args) {
-		timer = new MyTimer();
-
-		/*
-		 * persistence.xml should exist anyway, but custom properties can be set
-		 * as second parameter to createEntityManagerFactory()
-		 */
-		// WARNING: new properties will overwrite existing
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaProvider",
-				getCustomProperties("root", "root", "testdb"));
-		EntityManager em = emf.createEntityManager();
-
-		ps = new PointService(em);
-		pq = new PointQuery(em);
-
-		/* BASIC */
-
-		// fillTableWithPoints(50, true);
-
-		System.out.println(SPACE + "\nSearch result: " + ps.find(40L) + SPACE);
-		System.out.println("Search result: " + ps.find(300L) + SPACE);
-
-		System.out.println(SPACE + "\nRemove result: " + ps.remove(4L) + SPACE);
-
-		System.out.println(SPACE + "\nUpdate result: " + ps.update(1L, 100f, 100f) + SPACE);
-
-		System.out.println(SPACE + "\nCheck if loaded: " + ps.pointInitialized(1000L) + SPACE);
-
+	
+	private static void runQueries(EntityManager em){
 		/* QUERY */
-
+		private PointQuery pq = new PointQuery(em);
+		timer = new MyTimer();
+		
 		timer.start();
 		System.out.println(
 				SPACE + "\ntypedQuery select all: " + pq.selectAllPointsJPQL() + "\ntime: " + timer.stop() + SPACE);
@@ -94,6 +68,37 @@ public class Main {
 		timer.start();
 		System.out.println("criteriaQuery custom select: " + pq.filterPointsCriteria(Figure.SQUARE, 10f, null, null)
 				+ "\ntime: " + timer.stop() + SPACE);
+	}
+
+	public static void main(String[] args) {
+		
+
+		/*
+		 * persistence.xml should exist anyway, but custom properties can be set
+		 * as second parameter to createEntityManagerFactory()
+		 */
+		// WARNING: new properties will overwrite existing
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaProvider",
+				getCustomProperties("root", "root", "testdb"));
+		EntityManager em = emf.createEntityManager();
+
+		ps = new PointService(em);
+		
+
+		/* BASIC */
+
+		// fillTableWithPoints(50, true);
+
+		System.out.println(SPACE + "\nSearch result: " + ps.find(40L) + SPACE);
+		System.out.println("Search result: " + ps.find(300L) + SPACE);
+
+		System.out.println(SPACE + "\nRemove result: " + ps.remove(4L) + SPACE);
+
+		System.out.println(SPACE + "\nUpdate result: " + ps.update(1L, 100f, 100f) + SPACE);
+
+		System.out.println(SPACE + "\nCheck if loaded: " + ps.pointInitialized(1000L) + SPACE);
+
+		runQueries();
 
 		// Close the database connection:
 		em.close();
