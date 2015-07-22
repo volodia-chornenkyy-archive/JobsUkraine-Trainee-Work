@@ -2,11 +2,13 @@ package entity;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import entity.queries.CriteriaApi;
@@ -87,7 +89,6 @@ public class Main {
 		EntityManager em = emf.createEntityManager();
 
 		PointService ps = new PointService(em);
-		LineService ls = new LineService(em);
 
 		// create points
 		// fillTableWithPoints(ps, 15, true);
@@ -96,9 +97,8 @@ public class Main {
 		// LineService ls = new LineService(em);
 		// ls.create("first");
 		// for (long i = 5; i < 10; i++) {
-		// ls.addPoint(1L,i);
+		// ls.addPoint(1L, i);
 		// }
-
 		// get all points in selected line
 		// System.out.println(ls.getPoints(1L));
 
@@ -178,6 +178,14 @@ public class Main {
 		// System.out.println("dbEmployee " + dbEmployee);
 		//
 		// em.getTransaction().commit();
+
+		// select multiple object from tables
+		TypedQuery<Object[]> query = em.createQuery("select p,l from Line l join l.points p", Object[].class);
+		for (Object o[] : query.getResultList()) {
+			Point p = (Point) o[0];
+			Line l = (Line) o[1];
+			System.out.println(p + " " + l);
+		}
 
 		// Close the database connection:
 		em.close();
