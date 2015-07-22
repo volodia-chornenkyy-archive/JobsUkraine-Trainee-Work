@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Line {
+public class Line implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

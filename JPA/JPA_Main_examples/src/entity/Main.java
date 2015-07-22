@@ -13,6 +13,12 @@ import javax.persistence.TypedQuery;
 
 import entity.queries.CriteriaApi;
 import entity.queries.JavaPersitenceQueryLang;
+import entity.queries.Named;
+import services.CarService;
+import services.EmployeeService;
+import services.LineService;
+import services.PhoneService;
+import services.PointService;
 
 public class Main {
 
@@ -27,15 +33,6 @@ public class Main {
 		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
 		properties.put("hibernate.hbm2ddl.auto", "update");
 		return properties;
-	}
-
-	private static void fillTableWithPoints(PointService service, int amount, boolean log) {
-		// Store points in the database:
-		for (int i = 0; i < amount; i++) {
-			service.create(i, i * i);
-			if (log)
-				System.out.printf("created %d from %d\n", i, amount);
-		}
 	}
 
 	private static void runBasics(PointService service) {
@@ -88,104 +85,49 @@ public class Main {
 				getCustomProperties("root", "admin", "testdb"));
 		EntityManager em = emf.createEntityManager();
 
-		PointService ps = new PointService(em);
+		PointService pointService = new PointService(em);
+		LineService ls = new LineService(em);
+		CarService cs = new CarService(em);
+		PhoneService phoneService = new PhoneService(em);
+		EmployeeService employeeService = new EmployeeService(em);
+		Named namedQueries = new Named(em);
 
 		// create points
-		// fillTableWithPoints(ps, 15, true);
+		// ps.addPoints(15);
 
 		// add points to line @OneToMany relations
-		// LineService ls = new LineService(em);
-		// ls.create("first");
-		// for (long i = 5; i < 10; i++) {
-		// ls.addPoint(1L, i);
-		// }
+		// ls.create("third", 8L, 10L);
+
 		// get all points in selected line
-		// System.out.println(ls.getPoints(1L));
+		// System.out.println(ls.getPoints("first"));
 
-		// runBasics(ps);
+		// runBasics(ps); // change it
 
-		// Queries
-		// runJPQLQueries(em);
-		// runCriteriaQueries(em);
+		// QUERIES !!!!!
+		// runJPQLQueries(em); // change it
+		// runCriteriaQueries(em); // change it
 
 		// check named queries from annotation
-		// TypedQuery<Point> tq1 = em.createNamedQuery("Point.getAll",
-		// Point.class);
-		// System.out.println(tq1.getResultList());
-
-		// TypedQuery<Point> tq2 = em.createNamedQuery("Point.selectFigure",
-		// Point.class);
-		// System.out.println(tq2.setParameter("figure",
-		// Figure.TRIANGLE).getResultList());
+		// System.out.println(namedQueries.selectAllPoints());
+		// System.out.println(namedQueries.selectFigure(Figure.SQUARE));
 
 		// check named queries from orm.xml
-		// TypedQuery<Point> tq3 = em.createNamedQuery("Point.selectLess",
-		// Point.class);
-		// System.out.println(tq3.setParameter("maxValue", 5L).getResultList());
-
-		// @OneToOne relations
-		// em.getTransaction().begin();
-		// for (int i = 0; i < 15; i++) {
-		// Car c = new Car();
-		// c.setManufacturer("manufacturer" + i);
-		// c.setNumber(new CarNumber(String.valueOf(i)));
-		// em.persist(c);
-		// }
-		// em.getTransaction().commit();
-		// TypedQuery<Car> tq4 = em.createQuery("select c from Car c, CarNumber
-		// cn where c.number=cn.id ", Car.class);
-		// System.out.println(tq4.getResultList());
+		// System.out.println(namedQueries.selectLessThanId(5L));
 
 		// JOIN example
-		// TypedQuery<Point> tq4 = em.createQuery("select p from Line l join
-		// l.points p", Point.class);
-		// System.out.println(tq4.getResultList());
-
-		// TypedQuery<Car> tq4 = em.createQuery("select c from Car c, CarNumber
-		// cn where c.number=cn.id ", Car.class);
-		// System.out.println(tq4.getResultList());
+		// pointService.printPointsWithLineInfo();
+		// @OneToOne relations
+		// cs.createManyCars(15);
+		// cs.printCarsWithNumberInfo();
 
 		// @OneToMany unidirectional relations
-		// em.getTransaction().begin();
-		//
-		// Phone phone1 = new Phone();
-		// phone1.setNumber("55555");
-		// phone1.setType("fixed");
-		// em.persist(phone1);
-		//
-		// Phone phone2 = new Phone();
-		// phone2.setNumber("111-111");
-		// phone2.setType("mobile");
-		// em.persist(phone2);
-		//
-		// Employee employee = new Employee();
-		// employee.setName("Jack");
-		// employee.setSurname("Thomson");
-		// employee.setTitle("QA Engineer");
-		// employee.setCreated(new Date());
-		// employee.addPhone(phone1);
-		// employee.addPhone(phone2);
-		//
-		// em.persist(employee);
-		//
-		// long employeeId = employee.getId();
-		//
-		// em.getTransaction().commit();
-
-		// em.getTransaction().begin();
-		//
-		// Employee dbEmployee = em.find(Employee.class, 1L);
-		// System.out.println("dbEmployee " + dbEmployee);
-		//
-		// em.getTransaction().commit();
+		// long id = employeeService.create("Black", "Java", "Java", new
+		// Date());
+		// employeeService.add(id, phoneService.create("12345", "fixed"));
+		// employeeService.add(id, phoneService.create("54321", "mobile"));
 
 		// select multiple object from tables
-		TypedQuery<Object[]> query = em.createQuery("select p,l from Line l join l.points p", Object[].class);
-		for (Object o[] : query.getResultList()) {
-			Point p = (Point) o[0];
-			Line l = (Line) o[1];
-			System.out.println(p + " " + l);
-		}
+		// pointService.printListOfIdWithLine();
 
 		// Close the database connection:
 		em.close();

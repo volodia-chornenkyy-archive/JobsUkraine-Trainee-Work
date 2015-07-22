@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import entity.Car;
 import entity.Figure;
+import entity.Line;
 import entity.Point;
 
 public class JavaPersitenceQueryLang implements Basics {
@@ -68,6 +70,25 @@ public class JavaPersitenceQueryLang implements Basics {
 			tq.setParameter("z", z);
 
 		return tq.getResultList();
+	}
+
+	public List<Car> joinUsingWhere() {
+		TypedQuery<Car> tq4 = em.createQuery("select c from Car c, CarNumber cn where c.number=cn.id", Car.class);
+		return tq4.getResultList();
+	}
+
+	public List<Point> join() {
+		TypedQuery<Point> tq = em.createQuery("select p from Line l join l.points p", Point.class);
+		return tq.getResultList();
+	}
+
+	public List<Line> findLine(String name) {
+		return em.createQuery("select L from Line L where L.name = :name", Line.class).setParameter("name", name)
+				.getResultList();
+	}
+
+	public List<Object[]> findIdWithLine() {
+		return em.createQuery("select p.id,l from Line l join l.points p", Object[].class).getResultList();
 	}
 
 }

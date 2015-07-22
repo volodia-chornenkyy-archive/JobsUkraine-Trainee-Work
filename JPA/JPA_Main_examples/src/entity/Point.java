@@ -30,7 +30,7 @@ public class Point implements Serializable {
 	public Point() {
 	}
 
-	Point(float x, float y) {
+	public Point(float x, float y) {
 		this.setX(x);
 		this.setY(y);
 	}
