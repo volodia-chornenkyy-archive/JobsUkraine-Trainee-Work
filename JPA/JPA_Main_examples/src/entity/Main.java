@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +83,7 @@ public class Main {
 		 */
 		// WARNING: new properties will overwrite existing
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaProvider",
-				getCustomProperties("root", "root", "testdb"));
+				getCustomProperties("root", "admin", "testdb"));
 		EntityManager em = emf.createEntityManager();
 
 		PointService ps = new PointService(em);
@@ -131,9 +132,52 @@ public class Main {
 		// em.persist(c);
 		// }
 		// em.getTransaction().commit();
-		TypedQuery<Car> tq4 = em.createQuery("select c from Car c, CarNumber cn where c.number=cn.id ",
-				Car.class);
-		System.out.println(tq4.getResultList());
+		// TypedQuery<Car> tq4 = em.createQuery("select c from Car c, CarNumber
+		// cn where c.number=cn.id ", Car.class);
+		// System.out.println(tq4.getResultList());
+
+		// JOIN example
+		// TypedQuery<Point> tq4 = em.createQuery("select p from Line l join
+		// l.points p", Point.class);
+		// System.out.println(tq4.getResultList());
+
+		// TypedQuery<Car> tq4 = em.createQuery("select c from Car c, CarNumber
+		// cn where c.number=cn.id ", Car.class);
+		// System.out.println(tq4.getResultList());
+
+		// @OneToMany unidirectional relations
+		// em.getTransaction().begin();
+		//
+		// Phone phone1 = new Phone();
+		// phone1.setNumber("55555");
+		// phone1.setType("fixed");
+		// em.persist(phone1);
+		//
+		// Phone phone2 = new Phone();
+		// phone2.setNumber("111-111");
+		// phone2.setType("mobile");
+		// em.persist(phone2);
+		//
+		// Employee employee = new Employee();
+		// employee.setName("Jack");
+		// employee.setSurname("Thomson");
+		// employee.setTitle("QA Engineer");
+		// employee.setCreated(new Date());
+		// employee.addPhone(phone1);
+		// employee.addPhone(phone2);
+		//
+		// em.persist(employee);
+		//
+		// long employeeId = employee.getId();
+		//
+		// em.getTransaction().commit();
+
+		// em.getTransaction().begin();
+		//
+		// Employee dbEmployee = em.find(Employee.class, 1L);
+		// System.out.println("dbEmployee " + dbEmployee);
+		//
+		// em.getTransaction().commit();
 
 		// Close the database connection:
 		em.close();

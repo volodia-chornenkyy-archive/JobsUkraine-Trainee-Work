@@ -21,7 +21,7 @@ public class Car {
 	@OneToOne
 	@MapsId
 	private CarNumber number;
-	
+
 	public Car() {
 		// TODO Auto-generated constructor stub
 	}
@@ -50,5 +50,5 @@ public class Car {
 	public String toString() {
 		return "Car [id=" + id + ", manufacturer=" + manufacturer + ", number=" + number + "]\n";
 	}
-		
+
 }
