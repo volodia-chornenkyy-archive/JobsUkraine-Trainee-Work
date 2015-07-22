@@ -1,6 +1,5 @@
 package entity;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +34,7 @@ public class Main {
 		return properties;
 	}
 
-	private static void runBasics(PointService service) {
+	private static void runBasicSQLQueries(PointService service) {
 
 		System.out.println(SPACE + "\nSearch result: " + service.find(40L) + SPACE);
 		System.out.println("Search result: " + service.find(300L) + SPACE);
@@ -47,33 +46,6 @@ public class Main {
 		System.out.println(SPACE + "\nCheck if loaded: " + service.pointInitialized(1000L) + SPACE);
 	}
 
-	private static void runCriteriaQueries(EntityManager em) {
-		CriteriaApi criteriaApi = new CriteriaApi(em);
-
-		System.out.println("criteriaQuery select all: " + criteriaApi.selectAll() + SPACE);
-
-		// don't work
-		// System.out.println("criteriaQuery select squares: " +
-		// criteriaApi.selectFigure(Figure.SQUARE) + SPACE);
-
-		System.out.println("criteriaQuery count entities: " + criteriaApi.countAll() + SPACE);
-
-		System.out.println(
-				"criteriaQuery custom select: " + criteriaApi.filterPoints(Figure.SQUARE, 10f, null, null) + SPACE);
-	}
-
-	private static void runJPQLQueries(EntityManager em) {
-		JavaPersitenceQueryLang jpql = new JavaPersitenceQueryLang(em);
-
-		System.out.println("criteriaQuery select all: " + jpql.selectAll() + SPACE);
-
-		System.out.println("criteriaQuery select squares: " + jpql.selectFigure(Figure.SQUARE) + SPACE);
-
-		System.out.println("criteriaQuery count entities: " + jpql.countAll() + SPACE);
-
-		System.out.println("criteriaQuery custom select: " + jpql.filterPoints(Figure.SQUARE, 10f, null, null) + SPACE);
-	}
-
 	public static void main(String[] args) {
 
 		/*
@@ -82,7 +54,7 @@ public class Main {
 		 */
 		// WARNING: new properties will overwrite existing
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaProvider",
-				getCustomProperties("root", "admin", "testdb"));
+				getCustomProperties("root", "root", "testdb"));
 		EntityManager em = emf.createEntityManager();
 
 		PointService pointService = new PointService(em);
@@ -92,20 +64,26 @@ public class Main {
 		EmployeeService employeeService = new EmployeeService(em);
 		Named namedQueries = new Named(em);
 
+		// runBasicSQLQueries(pointService);
+
 		// create points
 		// ps.addPoints(15);
 
 		// add points to line @OneToMany relations
-		// ls.create("third", 8L, 10L);
+		// ls.create("fourth", 5L, 10L);
 
-		// get all points in selected line
+		// select multiple object from tables
+		// pointService.printListOfIdWithLine();
+
 		// System.out.println(ls.getPoints("first"));
 
-		// runBasics(ps); // change it
+		// pointService.printByFigure(Figure.TRIANGLE);
 
-		// QUERIES !!!!!
-		// runJPQLQueries(em); // change it
-		// runCriteriaQueries(em); // change it
+		// pointService.printAll();
+
+		// System.out.println(pointService.getAmount());
+
+		// pointService.printByFilter(Figure.SQUARE, 20f, null, null);
 
 		// check named queries from annotation
 		// System.out.println(namedQueries.selectAllPoints());
@@ -125,9 +103,6 @@ public class Main {
 		// Date());
 		// employeeService.add(id, phoneService.create("12345", "fixed"));
 		// employeeService.add(id, phoneService.create("54321", "mobile"));
-
-		// select multiple object from tables
-		// pointService.printListOfIdWithLine();
 
 		// Close the database connection:
 		em.close();

@@ -8,16 +8,19 @@ import entity.D3;
 import entity.Figure;
 import entity.Line;
 import entity.Point;
+import entity.queries.CriteriaApi;
 import entity.queries.JavaPersitenceQueryLang;
 
 public class PointService {
 
 	private EntityManager em;
 	private JavaPersitenceQueryLang jpql;
+	private CriteriaApi criteria;
 
 	public PointService(EntityManager em) {
 		this.em = em;
 		jpql = new JavaPersitenceQueryLang(em);
+		criteria = new CriteriaApi(em);
 	}
 
 	public Point create(float x, float y) {
@@ -95,5 +98,25 @@ public class PointService {
 			Line l = (Line) o[1];
 			System.out.println(id + " " + l);
 		}
+	}
+
+	public void printAll() {
+		System.out.println(jpql.selectAll());
+		// System.out.println(criteria.selectAll());
+	}
+
+	public void printByFigure(Figure figure) {
+		System.out.println(jpql.selectFigure(figure));
+		// System.out.println(criteria.selectFigure(figure));
+	}
+
+	public long getAmount() {
+		return jpql.countAll();
+		// return criteria.selectAll();
+	}
+
+	public void printByFilter(Figure f, Float x, Float y, Float z) {
+		System.out.println(jpql.filterPoints(f, x, y, z));
+		// System.out.println(criteria.filterPoints(f, x, y, z));
 	}
 }
