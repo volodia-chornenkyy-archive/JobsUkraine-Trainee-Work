@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,7 @@ public class Main {
 		 */
 		// WARNING: new properties will overwrite existing
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpaProvider",
-				getCustomProperties("root", "root", "testdb"));
+				getCustomProperties("root", "admin", "testdb"));
 		EntityManager em = emf.createEntityManager();
 
 		PointService pointService = new PointService(em);
@@ -99,13 +100,12 @@ public class Main {
 		// cs.printCarsWithNumberInfo();
 
 		// @OneToMany unidirectional relations
-		// long id = employeeService.create("Black", "Java", "Java", new
-		// Date());
-		// employeeService.add(id, phoneService.create("12345", "fixed"));
-		// employeeService.add(id, phoneService.create("54321", "mobile"));
+		long id = employeeService.create("Black", "Java", "Java", new Date());
+		employeeService.add(id, phoneService.create("12345", "fixed"));
+		employeeService.add(id, phoneService.create("54321", "mobile"));
 
 		// Close the database connection:
-		em.close();
+		em.close();  
 		emf.close();
 	}
 }
