@@ -15,7 +15,7 @@
 
 	<ul>
 		<li><c:url value="/log" var="url" /> <a
-			href="<c:out value='${url}'/>">text</a></li>
+			href="<c:out value='${url}'/>">Log In</a></li>
 	</ul>
 </body>
 </html>
