@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-*<%= request.getAttribute("userForm") %>*
+<%-- *<%= request.getAttribute("userForm") %>* --%>
+${userForm}
 </body>
 </html>

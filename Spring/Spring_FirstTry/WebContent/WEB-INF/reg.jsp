@@ -9,17 +9,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<center>
-		<h1>Home</h1>
-	</center>
+	reg
 
-	<ul>
-		<li><c:url value="/log" var="url1" /> <a
-			href="<c:out value='${url1}'/>">Log In</a></li>
-		<li><c:url value="/reg" var="url2" /> <a
-			href="<c:out value='${url2}'/>">Request/Response Body (dont work)</a></li>
-			<li><c:url value="/hit" var="url3" /> <a
-			href="<c:out value='${url3}'/>">Cookies</a></li>
-	</ul>
+	<form:form method="POST" action="/requestbody">
+		<input type="submit" name="action" id="request_body_test" value="<spring:message code="label.request.body"/>"  />
+		<input type="hidden" name="id" value="23" />
+		<input type="hidden" name="group" value="male" />
+	</form:form>
+
 </body>
 </html>
