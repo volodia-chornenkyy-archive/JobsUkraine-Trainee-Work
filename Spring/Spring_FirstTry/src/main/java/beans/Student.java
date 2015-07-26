@@ -6,6 +6,12 @@ public class Student {
 	private String group;
 	private int id;
 
+	public Student() {
+		this.name = "defaultName";
+		this.group = "defaultGroup";
+		this.id = -1;
+	}
+	
 	public String getName() {
 		return name;
 	}

@@ -18,6 +18,8 @@ public class HitController {
 
 		// create cookie and set it in response
 		Cookie cookie = new Cookie("hitCounter", hitCounter.toString());
+		// lifetime=10min (-1 delete on browser close; 0 - delete)
+		cookie.setMaxAge(600);
 		response.addCookie(cookie);
 
 		return "HitCounter";

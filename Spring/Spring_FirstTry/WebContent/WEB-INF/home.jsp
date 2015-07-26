@@ -18,8 +18,12 @@
 			href="<c:out value='${url1}'/>">Log In</a></li>
 		<li><c:url value="/reg" var="url2" /> <a
 			href="<c:out value='${url2}'/>">Request/Response Body (dont work)</a></li>
-			<li><c:url value="/hit" var="url3" /> <a
+		<li><c:url value="/hit" var="url3" /> <a
 			href="<c:out value='${url3}'/>">Cookies</a></li>
+		<li><c:url value="/model" var="url4" /> <a
+			href="<c:out value='${url4}'/>">@ModelAttribute</a></li>
+		<li><c:url value="/session" var="url5" /> <a
+			href="<c:out value='${url5}'/>">@SessionAttributes</a></li>
 	</ul>
 </body>
 </html>
