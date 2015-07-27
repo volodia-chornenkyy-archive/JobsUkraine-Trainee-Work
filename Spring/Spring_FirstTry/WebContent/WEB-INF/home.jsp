@@ -21,9 +21,9 @@
 		<li><c:url value="/hit" var="url3" /> <a
 			href="<c:out value='${url3}'/>">Cookies</a></li>
 		<li><c:url value="/model" var="url4" /> <a
-			href="<c:out value='${url4}'/>">@ModelAttribute</a></li>
-		<li><c:url value="/session" var="url5" /> <a
-			href="<c:out value='${url5}'/>">@SessionAttributes</a></li>
+			href="<c:out value='${url4}'/>">@ModelAttribute @SessionAttributes</a></li>
+		<li><c:url value="/employee/create" var="url5" /> <a
+			href="<c:out value='${url5}'/>">DB connection</a></li>
 	</ul>
 </body>
 </html>
